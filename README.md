@@ -18,6 +18,9 @@ use {
 -- lazy.nvim
 {
     "ndom91/freeze.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
 }
 ```
 
