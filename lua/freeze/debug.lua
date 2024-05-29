@@ -8,7 +8,7 @@ end
 
 M.print_log = function()
   for _, msg in ipairs(M.debug_log) do
-    print(msg)
+    print("debug", msg)
   end
 end
 

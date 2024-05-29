@@ -1,11 +1,11 @@
-local opts = require("freeze.config").opts
 local Job = require("plenary.job")
+local opts = require("freeze.config").opts
 local utils = require("freeze.utils")
+local debug = require("freeze.debug")
 
 local freeze = {}
 
 freeze.exec = function()
-  print("freeze.exec()")
   -- 0. Get buffer contents
   local lines = {}
   local buf = vim.api.nvim_get_current_buf()
@@ -19,6 +19,8 @@ freeze.exec = function()
     lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
   end
 
+  debug.log(vim.inspect(lines))
+
   local textpath = "/tmp/_nvim_freeze_code.txt"
   local imgpath = "/tmp/_nvim_freeze.png"
 
@@ -28,27 +30,64 @@ freeze.exec = function()
     textpath,
     "-o",
     imgpath,
-    -- "--font",
-    -- opts.font,
+
     "--language",
     vim.bo.filetype,
-    -- "--line-offset",
-    -- opts.lineOffset,
-    -- "--line-pad",
-    -- opts.linePad,
-    -- "--pad-horiz",
-    -- opts.padHoriz,
-    -- "--pad-vert",
-    -- opts.padVert,
-    -- "--shadow-blur-radius",
-    -- opts.shadowBlurRadius,
-    -- "--shadow-color",
-    -- opts.shadowColor,
-    -- "--shadow-offset-x",
-    -- opts.shadowOffsetX,
-    -- "--shadow-offset-y",
-    -- opts.shadowOffsetY,
   }
+
+  if opts.backgroundColor then
+    table.insert(args, "--background " .. opts.backgroundColor)
+  end
+
+  if opts.margin then
+    table.insert(args, "--margin " .. opts.margin)
+  end
+
+  if opts.padding then
+    table.insert(args, "--padding " .. opts.padding)
+  end
+
+  if opts.borderRadius then
+    table.insert(args, "--border.radius " .. opts.borderRadius)
+  end
+
+  if opts.borderWidth then
+    table.insert(args, "--border.width " .. opts.borderWidth)
+  end
+
+  if opts.borderColor then
+    table.insert(args, "--border.color " .. opts.borderColor)
+  end
+
+  if opts.fontSize then
+    table.insert(args, "--font.size " .. opts.fontSize)
+  end
+
+  if opts.fontFamily then
+    table.insert(args, "--font.family " .. opts.fontFamily)
+  end
+
+  if opts.shadowBlur then
+    table.insert(args, "--shadow.blur " .. opts.shadowBlur)
+  end
+
+  if opts.shadowY then
+    table.insert(args, "--shadow.y " .. opts.shadowY)
+  end
+
+  if opts.shadowX then
+    table.insert(args, "--shadow.x " .. opts.shadowX)
+  end
+
+  if opts.windowControls then
+    table.insert(args, "--window")
+  end
+
+  if opts.showLineNumbers then
+    table.insert(args, "--show-line-numbers")
+  end
+
+  debug.log("Args" .. vim.inspect(args))
 
   if #lines ~= 0 then
     -- 1. Write text to file
@@ -60,14 +99,14 @@ freeze.exec = function()
       vim.notify("Error writing file: " .. err_msg, vim.log.levels.ERROR, { plugin = "freeze.nvim" })
     end
 
-    -- 2. Run `freeze` outputting to tmp png file
+    -- 2. Run `freeze` on file to generate image
     local job = Job:new({
       command = "freeze",
       args = args,
       on_exit = function(_, code)
         if code == 0 then
           local msg = ""
-          -- 3. Copy tmp png file to clipboard
+          -- 3. Copy png file to clipboard
           msg = "Text frozen to clipboard!"
           vim.defer_fn(function()
             utils.copy_image_to_clipboard(imgpath)
@@ -76,7 +115,7 @@ freeze.exec = function()
             vim.notify(msg, vim.log.levels.INFO, { plugin = "freeze.nvim" })
           end, 0)
 
-          -- Cleanup
+          -- 4. Cleanup
           vim.defer_fn(function()
             vim.api.nvim_buf_delete(tempbuf, { force = true })
             vim.fn.delete(textpath)
@@ -92,11 +131,8 @@ freeze.exec = function()
           end, 0)
         end
       end,
-      on_stderr = function(a, data)
-        print("freeze.on_error", vim.inspect(a))
-        if opts.debug then
-          print(vim.inspect(data))
-        end
+      on_stderr = function(proc, code)
+        debug.log(code .. vim.inspect(proc))
       end,
       writer = table.concat(lines, "\n"),
       cwd = vim.fn.getcwd(),
@@ -104,6 +140,10 @@ freeze.exec = function()
     job:sync()
   else
     vim.notify("Unable to get lines to generate screenshot", vim.log.levels.WARN, { plugin = "freeze.nvim" })
+  end
+
+  if opts.debug then
+    debug.print_log()
   end
 end
 

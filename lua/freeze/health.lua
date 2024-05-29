@@ -16,7 +16,7 @@ M.check = function()
       error("`xclip` is not installed")
     end
 
-  -- Linux (Wayland)
+    -- Linux (Wayland)
   elseif os.getenv("WAYLAND_DISPLAY") then
     if vim.fn.executable("wl-copy") then
       ok("`wl-clipboard` is installed")
@@ -24,7 +24,7 @@ M.check = function()
       error("`wl-clipboard` is not installed")
     end
 
-  -- MacOS
+    -- MacOS
   elseif vim.fn.has("mac") == 1 then
     if vim.fn.executable("osascript") then
       ok("`osascript` is installed")
@@ -37,14 +37,13 @@ M.check = function()
       warn("`pngpaste` is not installed")
     end
 
-  -- Windows
+    -- Windows
   elseif vim.fn.has("win32") == 1 or vim.fn.has("wsl") == 1 then
-    error("Windows is not supported")
-    -- if vim.fn.executable("powershell.exe") then
-    --   ok("`powershell.exe` is installed")
-    -- else
-    --   error("`powershell.exe` is not installed")
-    -- end
+    if vim.fn.executable("powershell.exe") then
+      ok("`powershell.exe` is installed")
+    else
+      error("`powershell.exe` is not installed")
+    end
 
     -- Other OS
   else

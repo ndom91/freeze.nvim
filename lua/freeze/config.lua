@@ -1,24 +1,22 @@
 local config = {}
 
 config.opts = {
+  debug = true,
   theme = "dracula",
-  output = "FREEZE_${year}-${month}-${date}_${time}.png",
-  bgColor = vim.g.terminal_color_5,
-  bgImage = "", -- path to image, must be png
-  roundCorner = true,
   windowControls = true,
-  lineNumber = true,
-  font = "monospace",
-  lineOffset = 1, -- no idea what this is
-  linePad = 2, -- padding between lines
-  padHoriz = 80, -- Horizontal padding
-  padVert = 100, -- vertical padding
-  shadowBlurRadius = 10,
-  shadowColor = "#555555",
-  shadowOffsetX = 8,
-  shadowOffsetY = 8,
-  gobble = false,
-  debug = false,
+  -- backgroundColor = "#1E1E1E",
+  -- margin = 2,
+  -- padding = 2,
+  -- borderRadius = 8,
+  -- borderWidth = 1,
+  -- borderColor = "#515151",
+  -- shadowBlur = 20,
+  -- shadowX = 0,
+  -- shadowY = 10,
+  showLineNumbers = true,
+  -- fontFamily = "monospace",
+  -- fontSize = 16,
+  -- fontLigatures = true,
 }
 
 --- @param opts table
