@@ -35,6 +35,7 @@ use {
 ```lua
 {
   "ndom91/freeze.nvim",
+  lazy = false,
   keys = {
     {
       "<leader>f",
@@ -52,7 +53,7 @@ use {
 
 ## 🏗️ Usage
 
-After adding it to your plugin manager of choice and installing, you can simply call it with any keybinding you like.
+After adding it to your plugin manager of choice and installing, you can call it with any keybinding or with the `Freeze` command.
 
 ```lua
 vim.keymap.set("n", "<leader>f", function() freeze:exec() end)
