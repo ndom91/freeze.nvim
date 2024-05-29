@@ -114,3 +114,7 @@ nvim --headless --noplugin -u tests/minimal.vim -c "PlenaryBustedDirectory tests
 
 - nvim-lua-guide: https://github.com/nanotee/nvim-lua-guide
 - plenary: https://github.com/nvim-lua/plenary.nvim
+
+## 📝 License
+
+MIT
