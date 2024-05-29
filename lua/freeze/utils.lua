@@ -8,8 +8,8 @@ local M = {}
 M.get_visual_selection_range = function()
   local mode = vim.fn.mode()
   if mode == "V" or mode == "v" then
-    local start_pos = vim.fn.getpos("'<")[2]
-    local end_pos = vim.fn.getpos("'>")[2]
+    local start_pos = vim.fn.getpos("v")[2]
+    local end_pos = vim.fn.getpos(".")[2]
     return start_pos, end_pos
   else
     return nil, nil
@@ -24,13 +24,13 @@ M.copy_image_to_clipboard = function(imgpath)
     local _, exit_code = M.execute(command)
     return exit_code
 
-  -- Windows
+    -- Windows
   elseif (vim.fn.has("win32") == 1 or vim.fn.has("wsl") == 1) and vim.fn.executable("powershell.exe") then
     local command = string.format("Get-ChildItem %s Path> | Set-Clipboard", imgpath)
     local _, exit_code = M.execute(command)
     return exit_code
 
-  -- MacOS
+    -- MacOS
   elseif vim.fn.has("mac") == 1 then
     if vim.fn.executable("pbcopy") then
       local command = string.format("pbcopy < %s", imgpath)
@@ -38,13 +38,13 @@ M.copy_image_to_clipboard = function(imgpath)
       return exit_code
     end
 
-  -- Linux (Wayland)
+    -- Linux (Wayland)
   elseif os.getenv("WAYLAND_DISPLAY") and vim.fn.executable("wl-paste") then
     local command = string.format("wl-copy < %s", imgpath)
     local _, exit_code = M.execute(command)
     return exit_code
 
-  -- Linux (X11)
+    -- Linux (X11)
   elseif os.getenv("DISPLAY") and vim.fn.executable("xclip") then
     local command = string.format("xclip -selection clipboard -t image/png %s", imgpath)
     local _, exit_code = M.execute(command)
@@ -66,8 +66,8 @@ M.execute = function(input_cmd, execute_directly)
   if execute_directly or shell:match("powershell") or shell:match("pwsh") then
     cmd = input_cmd
 
-  -- WSL requires the command to have the format:
-  -- powershell.exe -Command 'command "path/to/file"'
+    -- WSL requires the command to have the format:
+    -- powershell.exe -Command 'command "path/to/file"'
   elseif vim.fn.has("wsl") == 1 then
     if input_cmd:match("curl") then
       cmd = input_cmd
@@ -75,12 +75,12 @@ M.execute = function(input_cmd, execute_directly)
       cmd = "powershell.exe -NoProfile -Command '" .. input_cmd:gsub("'", '"') .. "'"
     end
 
-  -- cmd.exe requires the command to have the format:
-  -- powershell.exe -Command "command 'path/to/file'"
+    -- cmd.exe requires the command to have the format:
+    -- powershell.exe -Command "command 'path/to/file'"
   elseif vim.fn.has("win32") == 1 then
     cmd = 'powershell.exe -NoProfile -Command "' .. input_cmd:gsub('"', "'") .. '"'
 
-  -- otherwise (linux, macos), execute the command directly
+    -- otherwise (linux, macos), execute the command directly
   else
     cmd = "sh -c " .. vim.fn.shellescape(input_cmd)
   end

@@ -7,6 +7,10 @@ local freeze = {}
 
 freeze.setup = function(o)
   require("freeze.config").setup(o)
+
+  vim.api.nvim_create_user_command("Freeze", function()
+    freeze.exec()
+  end, { range = true })
 end
 
 freeze.exec = function()
@@ -95,8 +99,6 @@ freeze.exec = function()
 
   if #lines ~= 0 then
     -- 1. Write text to file
-    local tempbuf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_buf_set_lines(tempbuf, 0, -1, false, lines)
     local _, err_msg = pcall(vim.fn.writefile, lines, textpath)
 
     if err_msg ~= 0 then
@@ -111,7 +113,7 @@ freeze.exec = function()
         if code == 0 then
           local msg = ""
           -- 3. Copy png file to clipboard
-          msg = "Text frozen to clipboard!"
+          msg = "Screenshot copied to clipboard!"
           vim.defer_fn(function()
             utils.copy_image_to_clipboard(imgpath)
           end, 0)
@@ -121,7 +123,6 @@ freeze.exec = function()
 
           -- 4. Cleanup
           vim.defer_fn(function()
-            vim.api.nvim_buf_delete(tempbuf, { force = true })
             vim.fn.delete(textpath)
             vim.fn.delete(imgpath)
           end, 0)
