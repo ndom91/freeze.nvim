@@ -111,5 +111,5 @@ Or if you want to run a single test file:
 nvim --headless --noplugin -u tests/minimal.vim -c "PlenaryBustedDirectory tests/path_to_file.lua {minimal_init = 'tests/minimal.vim'}"
 ```
 
-- [nvim-lua-guide]: https://github.com/nanotee/nvim-lua-guide
-- [plenary]: https://github.com/nvim-lua/plenary.nvim
+- nvim-lua-guide: https://github.com/nanotee/nvim-lua-guide
+- plenary: https://github.com/nvim-lua/plenary.nvim
