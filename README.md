@@ -2,6 +2,8 @@
 
 Simple plugin to screenshot your currently highlighted text and pass it into Charm's [freeze](https://github.com/charmbracelet/freeze) CLI.
 
+![](screenshot.png)
+
 ## Installation
 
 - neovim 0.8.0+ required
