@@ -1,6 +1,6 @@
 # freeze.nvim
 
-Simple plugin to screenshot your currently highlighted text and pass it into Charm's [freeze](https://github.com/charmbracelet/freeze) CLI.
+Neovim plugin to consume some text, pass it into Charm's [freeze](https://github.com/charmbracelet/freeze) CLI to generate a screenshot, and then put it into your clipboard.
 
 <img  width="50%" src="screenshot.png" />
 
@@ -17,6 +17,7 @@ Simple plugin to screenshot your currently highlighted text and pass it into Cha
 ## 📦 Installation
 
 ### [Packer](https://github.com/wbthomason/packer.nvim)
+
 ```lua
 use {
   "ndom91/freeze.nvim",
@@ -49,7 +50,6 @@ use {
 }
 ```
 
-
 ## 🏗️ Usage
 
 After adding it to your plugin manager of choice and installing, you can simply call it with any keybinding you like.
@@ -57,6 +57,8 @@ After adding it to your plugin manager of choice and installing, you can simply 
 ```lua
 vim.keymap.set("n", "<leader>f", function() freeze:exec() end)
 ```
+
+In `normal` mode, it will pass on the entire current buffer to be screenshotted. However, if you highlight a block of text in `visual` mode, only that will be used for the screenshot.
 
 ### Options
 
@@ -69,7 +71,7 @@ All available options are listed below, these are all passed on to [Charm's CLI 
   theme = "dracula",
   windowControls = true,
   showLineNumbers = true,
-  
+
   -- Rest
   backgroundColor = "#1E1E1E",
   margin = 2,
