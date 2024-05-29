@@ -18,6 +18,7 @@
             stylua
             luajitPackages.luacheck
             nvim-nightly.packages.${pkgs.system}.default
+            vimPlugins.plenary-nvim
             charm-freeze
           ];
 

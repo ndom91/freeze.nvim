@@ -8,20 +8,20 @@ local error = vim.health.error or vim.health.report_error
 M.check = function()
   start("freeze.nvim")
 
-  -- Linux (X11)
-  if os.getenv("DISPLAY") then
-    if vim.fn.executable("xclip") then
-      ok("`xclip` is installed")
-    else
-      error("`xclip` is not installed")
-    end
-
-    -- Linux (Wayland)
-  elseif os.getenv("WAYLAND_DISPLAY") then
+  -- Linux (Wayland)
+  if os.getenv("WAYLAND_DISPLAY") then
     if vim.fn.executable("wl-copy") then
       ok("`wl-clipboard` is installed")
     else
       error("`wl-clipboard` is not installed")
+    end
+
+    -- Linux (X11)
+  elseif os.getenv("DISPLAY") then
+    if vim.fn.executable("xclip") then
+      ok("`xclip` is installed")
+    else
+      error("`xclip` is not installed")
     end
 
     -- MacOS

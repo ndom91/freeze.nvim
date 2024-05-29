@@ -5,6 +5,10 @@ local debug = require("freeze.debug")
 
 local freeze = {}
 
+freeze.setup = function(o)
+  require("freeze.config").setup(o)
+end
+
 freeze.exec = function()
   -- 0. Get buffer contents
   local lines = {}
