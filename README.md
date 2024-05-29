@@ -53,10 +53,10 @@ use {
 
 ## 🏗️ Usage
 
-After adding it to your plugin manager of choice and installing, you can call it with any keybinding or with the `Freeze` command.
+You can call freeze with a keybinding or with the `Freeze` command. To make sure the `Freeze` command is always available, make sure to disable lazy loading of the plugin (`lazy = false` in the `Lazy.nvim` configuration).
 
 ```lua
-vim.keymap.set("n", "<leader>f", function() freeze:exec() end)
+vim.keymap.set("n", "<leader>f", function() freeze.exec() end)
 ```
 
 In `normal` mode, it will pass on the entire current buffer to be screenshotted. However, if you highlight a block of text in `visual` mode, only that will be used for the screenshot.
