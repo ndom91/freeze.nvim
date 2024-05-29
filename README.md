@@ -2,7 +2,7 @@
 
 Simple plugin to screenshot your currently highlighted text and pass it into Charm's [freeze](https://github.com/charmbracelet/freeze) CLI.
 
-![](screenshot.png)
+<img  width="50%" src="screenshot.png" />
 
 ## Installation
 
@@ -45,16 +45,22 @@ vim.keymap.set("n", "<leader>f", function() freeze:exec() end)
 
 ### Options
 
-```
+All available options are listed below
+
+```lua
 {
     "ndom91/freeze.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
     opts = {
-        debug = true,
+        -- Defaults
+        debug = false,
         theme = "dracula",
         windowControls = true,
+        showLineNumbers = true,
+
+        -- Rest
         backgroundColor = "#1E1E1E",
         margin = 2,
         padding = 2,
@@ -64,7 +70,6 @@ vim.keymap.set("n", "<leader>f", function() freeze:exec() end)
         shadowBlur = 20,
         shadowX = 0,
         shadowY = 10,
-        showLineNumbers = true,
         fontFamily = "monospace",
         fontSize = 16,
         fontLigatures = true,
