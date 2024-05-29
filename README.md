@@ -18,6 +18,15 @@ use {
 -- lazy.nvim
 {
     "ndom91/freeze.nvim",
+    keys = {
+      {
+        "<leader>f",
+        function() require("freeze").exec() end,
+        mode = { "n", "v" },
+        desc = "[F]reeze",
+        noremap = true,
+      },
+    },
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -29,7 +38,36 @@ use {
 After adding it to your plugin manager of choice and installing, you can simply call it with any keybinding you like.
 
 ```lua
-vim.keymap.set("n", "<leader>ss", function() freeze:snap() end)
+vim.keymap.set("n", "<leader>f", function() freeze:exec() end)
+```
+
+### Options
+
+```
+{
+    "ndom91/freeze.nvim",
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+    opts = {
+        debug = true,
+        theme = "dracula",
+        windowControls = true,
+        backgroundColor = "#1E1E1E",
+        margin = 2,
+        padding = 2,
+        borderRadius = 8,
+        borderWidth = 1,
+        borderColor = "#515151",
+        shadowBlur = 20,
+        shadowX = 0,
+        shadowY = 10,
+        showLineNumbers = true,
+        fontFamily = "monospace",
+        fontSize = 16,
+        fontLigatures = true,
+    }
+}
 ```
 
 ## Development
