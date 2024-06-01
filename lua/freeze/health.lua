@@ -8,6 +8,12 @@ local error = vim.health.error or vim.health.report_error
 M.check = function()
   start("freeze.nvim")
 
+  if vim.fn.executable("freeze") then
+    ok("Charm `freeze` is installed")
+  else
+    error("Charm `freeze` is not installed")
+  end
+
   -- Linux (Wayland)
   if os.getenv("WAYLAND_DISPLAY") then
     if vim.fn.executable("wl-copy") then
