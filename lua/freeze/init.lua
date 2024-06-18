@@ -142,7 +142,7 @@ freeze.exec = function()
       writer = table.concat(lines, "\n"),
       cwd = vim.fn.getcwd(),
     })
-    job:sync()
+    job:sync(10000)
   else
     vim.notify("Unable to get lines to generate screenshot", vim.log.levels.WARN, { plugin = "freeze.nvim" })
   end
