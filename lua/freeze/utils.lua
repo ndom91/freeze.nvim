@@ -39,7 +39,7 @@ M.copy_image_to_clipboard = function(imgpath)
     end
 
     -- Linux (Wayland)
-  elseif os.getenv("WAYLAND_DISPLAY") and vim.fn.executable("wl-paste") then
+  elseif (os.getenv("WAYLAND_DISPLAY") or os.getenv("XDG_SESSION_TYPE") == "wayland") and vim.fn.executable("wl-copy") then
     local command = string.format("wl-copy < %s", imgpath)
     local _, exit_code = M.execute(command)
     return exit_code

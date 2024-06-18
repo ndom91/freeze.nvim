@@ -15,7 +15,7 @@ M.check = function()
   end
 
   -- Linux (Wayland)
-  if os.getenv("WAYLAND_DISPLAY") then
+  if (os.getenv("WAYLAND_DISPLAY") or os.getenv("XDG_SESSION_TYPE") == "wayland") then
     if vim.fn.executable("wl-copy") then
       ok("`wl-clipboard` is installed")
     else
